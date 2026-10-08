@@ -1,96 +1,228 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0e1a3a">
 <title>NAIJA CASE FILE</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#0b0f0c;color:#e8e6df;font-family:system-ui,sans-serif}
-#app{max-width:480px;margin:0 auto;min-height:100vh;padding:20px}
-h1{letter-spacing:4px;color:#2ecc71;text-align:center;margin:40px 0 8px}
-h2{color:#2ecc71}
-.tag{text-align:center;font-style:italic;color:#9aa;margin-bottom:40px}
-button{display:block;width:100%;padding:16px;margin:10px 0;background:#2ecc71;color:#06120a;border:0;border-radius:10px;font-size:17px;font-weight:700}
-button.alt{background:#1c2a21;color:#2ecc71;border:1px solid #2ecc71}
-button:disabled{opacity:.35}
-label{display:block;margin:14px 0 4px;color:#9aa;font-size:14px}
-input,select{width:100%;padding:13px;border-radius:8px;border:1px solid #2a3a30;background:#121a15;color:#fff;font-size:16px}
-.card{background:#121a15;border:1px solid #2a3a30;border-radius:12px;padding:14px;margin:10px 0;display:flex;gap:12px;align-items:center}
-.card.sel{border-color:#2ecc71;background:#16261c}
-.av{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#fff;flex:none}
-.small{font-size:13px;color:#9aa}
-.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1f2d25}
-.hud{font-size:13px;color:#9aa;text-align:center;border-bottom:1px solid #1f2d25;padding-bottom:8px;margin-bottom:12px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:#fff4df;color:#2b1a06;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+#app{max-width:480px;margin:0 auto;min-height:100vh;position:relative}
+.screen{min-height:100vh}
+.splash{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#0e1a3a;color:#fff}
+.splash h2{margin:0;letter-spacing:3px}
+.bar{width:170px;height:6px;background:#ffffff33;border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:#f5b335;width:0;animation:ld 1.7s forwards}
+@keyframes ld{to{width:100%}}
+.title{position:relative;overflow:hidden;background:linear-gradient(#0e1a3a,#2a2150 55%,#c0552f);color:#fff;display:flex;flex-direction:column;justify-content:space-between}
+.st{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;animation:tw 2s infinite alternate}
+@keyframes tw{from{opacity:.15}to{opacity:1}}
+.moon{position:absolute;right:28px;top:60px;width:46px;height:46px;border-radius:50%;background:#fff3c4;box-shadow:0 0 30px #fff3c4aa}
+.tw{position:relative;text-align:center;padding-top:80px;z-index:2}
+.tw h1{margin:14px 0 6px;font-size:40px;letter-spacing:5px;line-height:1.05;color:#ffd166;text-shadow:0 3px 0 #7a3b12}
+.tw p{margin:0;font-style:italic;color:#ffe9b8}
+.btns{position:relative;z-index:2;padding:0 30px 40px;margin-top:30px}
+.sky{position:absolute;left:0;bottom:0;width:100%;z-index:1;opacity:.95}
+.dan{animation:dr 9s linear infinite}
+@keyframes dr{from{transform:translateX(-70px)}to{transform:translateX(400px)}}
+.btn{display:block;width:100%;padding:16px;border:0;border-radius:99px;background:linear-gradient(#ffc94d,#f59e0b);color:#2b1a06;font-size:17px;font-weight:800;margin:12px 0;box-shadow:0 4px 0 #b36b00}
+.btn.alt{background:#fff;color:#7a4a00;box-shadow:0 4px 0 #e0c590}
+.btn:disabled{opacity:.4}
+.top{padding:18px 18px 8px;font-size:22px;font-weight:800}
+.stage{height:290px;display:flex;align-items:flex-end;justify-content:center;background:linear-gradient(#bfe3f7,#eaf6fc 70%,#d7c08a 70%);padding-bottom:14px}
+.bob{animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px)}}
+.panel{background:#fff;border-radius:26px 26px 0 0;padding:18px 18px 30px;margin-top:-16px;position:relative}
+label.l{font-size:13px;font-weight:700;color:#8a6a35;margin:14px 0 6px;display:block}
+.in{width:100%;padding:13px;border-radius:14px;border:2px solid #f0d9ae;font-size:16px;background:#fffaf0;color:#2b1a06}
+.chip{padding:9px 14px;border-radius:99px;border:2px solid #f0d9ae;background:#fff;font-weight:600;margin:0 6px 8px 0;color:#5a3a12;font-size:14px}
+.chip.on{background:#f5b335;border-color:#f5b335;color:#2b1a06}
+.sw{width:38px;height:38px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px #e6cfa0;margin:0 8px 8px 0;padding:0}
+.sw.on{box-shadow:0 0 0 3px #2b1a06}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:6px 14px 20px}
+.pc{background:#fff;border-radius:20px;padding:12px;text-align:center;border:3px solid transparent;box-shadow:0 3px 0 #ecd6a6}
+.pc.on{border-color:#f59e0b;background:#fff3d1}
+.pc b{display:block;margin-top:6px}
+.pc .s{font-size:12px;color:#7a6440;margin-top:2px}
+.pc .i{font-style:italic}
+.pt{border-radius:50%;overflow:hidden;margin:0 auto;background:#fff}
+.foot{position:sticky;bottom:0;padding:12px 16px 16px;background:linear-gradient(transparent,#fff4df 35%)}
+.hdr{display:flex;align-items:center;gap:12px;padding:16px;background:#1f2a44;color:#fff;border-radius:0 0 24px 24px}
+.hav{width:58px;height:58px;border-radius:50%;overflow:hidden;background:#bfe3f7;flex:none}
+.hdr small{color:#cfd6ea}
+.case{background:#fff;border-radius:20px;padding:16px;margin:12px 16px;display:flex;gap:12px;align-items:center;box-shadow:0 3px 0 #ecd6a6}
+.case.lock{opacity:.6;background:#f3e8d0}
+.num{width:52px;height:52px;border-radius:16px;background:#f5b335;display:flex;align-items:center;justify-content:center;font-weight:800;flex:none}
+.case.lock .num{background:#cdbb97}
+.case small{color:#7a6440}
+.go{margin-left:auto;padding:10px 16px;border-radius:99px;border:0;background:#1f2a44;color:#fff;font-weight:700}
+.card{background:#fff;border-radius:22px;padding:8px 18px;margin:16px;box-shadow:0 3px 0 #ecd6a6}
+.row{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #f3e6c8}
+.row:last-child{border:0}.row span{color:#8a6a35;font-size:14px}
+.night{background:linear-gradient(#0e1a3a,#1d1b3a 60%,#3a2a35);color:#fff;display:flex;flex-direction:column}
+.pill{margin:14px;padding:10px 14px;border-radius:99px;background:#ffffff22;text-align:center;font-size:13px}
+.sv{flex:1;display:flex;align-items:flex-end;justify-content:center;gap:14px;padding-bottom:10px}
+.dlg{margin:0 14px 22px;background:#fffaf0;color:#2b1a06;border-radius:20px;padding:14px;display:flex;gap:12px;align-items:center;min-height:100px}
+.dlg b{display:block;color:#b36b00;font-size:13px;margin-bottom:3px}
+.hint{font-size:11px;color:#9a8660;margin-top:6px}
 </style></head><body><div id="app"></div>
 <script>
-var KEY='naijaCaseFile1';
-var S={detective:{},partner:null,partnerName:'',stage:'create'};
+var KEY='naijaCaseFile2';
+var S={det:null,partner:null,partnerName:'',stage:'title'};
+var D=null,LN=0;
 var app=document.getElementById('app');
-function $(id){return document.getElementById(id)}
-function esc(s){return String(s).replace(/[&<>"]/g,function(c){return '&#'+c.charCodeAt(0)+';'})}
-function opts(a){return a.map(function(x){return '<option>'+x+'</option>'}).join('')}
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return '&#'+c.charCodeAt(0)+';'})}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
-var HT=[];for(var i=0;i<=11;i++)HT.push('5ft '+i);for(i=0;i<=5;i++)HT.push('6ft '+i);
+function top0(){window.scrollTo(0,0)}
+var SKIN=['#f1c9a5','#d9a066','#a8693a','#7a4524','#4a2a17'];
+var OUTS=[{n:'Plain shirt',top:'#3f7fbf',pants:'#2b2f3a'},{n:'Native wear',top:'#2e8b57',pants:'#2e8b57',native:1},{n:'Polo & jeans',top:'#d9534f',pants:'#3b5b92',polo:1},{n:'Old suit',top:'#6b6f78',pants:'#6b6f78',suit:1}];
+var HAIRS=['Low cut','Afro','Braids','Bald','Headwrap'];
+var HT=[];var i,j;for(i=5;i<=6;i++){for(j=0;j<=11;j++){if(i===5&&j<0)continue;HT.push(i+'ft '+j)}}
+HT=HT.filter(function(h){var a=h.split('ft ');return +a[0]*12+ +a[1]<=77});
 var PARTNERS=[
-['Emeka','Male',38,'5ft 11','Heavyset, grey at the temples','Patient, reads people well','#2980b9'],
-['Aisha','Female',31,'5ft 6','Sharp eyes, neat hijab','Methodical, great with evidence','#8e44ad'],
-['Tunde','Male',27,'6ft 1','Tall, lean, restless','Quick-witted, a bit reckless','#c0392b'],
-['Ngozi','Female',44,'5ft 4','Short natural hair, reading glasses','Calm, strong on the law','#16a085'],
-['Musa','Male',35,'5ft 9','Beard, quiet, watchful','Observant, speaks little','#d35400'],
-['Funke','Female',29,'5ft 8','Braids, athletic','Bold, great in the field','#27ae60'],
-['Ifeanyi','Male',50,'5ft 7','Bald, stern, veteran','Blunt, has seen it all','#7f8c8d'],
-['Hauwa','Female',33,'5ft 5','Soft-spoken, always taking notes','Gentle, gets people to open up','#2c3e50'],
-['Efe','Male',30,'5ft 10','Stylish, easy smile','Charming, sometimes wrong','#e67e22'],
-['Bisi','Female',40,'5ft 3','Round face, warm voice','Motherly, spots liars fast','#c2185b']];
+{name:'Emeka',sex:'Male',age:38,height:'5ft 11',look:'Heavyset, grey at the temples',pers:'Patient, reads people well',skin:2,hair:'short',extra:'grey',cloth:'#2980b9'},
+{name:'Aisha',sex:'Female',age:31,height:'5ft 6',look:'Sharp eyes, neat hijab',pers:'Methodical, great with evidence',skin:1,hair:'hijab',extra:'',cloth:'#8e44ad'},
+{name:'Tunde',sex:'Male',age:27,height:'6ft 1',look:'Tall, lean, restless',pers:'Quick-witted, a bit reckless',skin:3,hair:'short',extra:'',cloth:'#c0392b'},
+{name:'Ngozi',sex:'Female',age:44,height:'5ft 4',look:'Natural hair, reading glasses',pers:'Calm, strong on the law',skin:2,hair:'afro',extra:'glasses',cloth:'#16a085'},
+{name:'Musa',sex:'Male',age:35,height:'5ft 9',look:'Beard, quiet, watchful',pers:'Observant, speaks little',skin:2,hair:'short',extra:'beard',cloth:'#d35400'},
+{name:'Funke',sex:'Female',age:29,height:'5ft 8',look:'Braids, athletic',pers:'Bold, great in the field',skin:3,hair:'braids',extra:'',cloth:'#27ae60'},
+{name:'Ifeanyi',sex:'Male',age:50,height:'5ft 7',look:'Bald, stern, veteran',pers:'Blunt, has seen it all',skin:4,hair:'bald',extra:'gbeard',cloth:'#7f8c8d'},
+{name:'Hauwa',sex:'Female',age:33,height:'5ft 5',look:'Soft-spoken, always taking notes',pers:'Gentle, gets people to open up',skin:0,hair:'hijab',extra:'glasses',cloth:'#2c3e50'},
+{name:'Efe',sex:'Male',age:30,height:'5ft 10',look:'Stylish, easy smile',pers:'Charming, sometimes wrong',skin:2,hair:'short',extra:'stubble',cloth:'#e67e22'},
+{name:'Bisi',sex:'Female',age:40,height:'5ft 3',look:'Round face, warm voice',pers:'Motherly, spots liars fast',skin:3,hair:'headwrap',extra:'',cloth:'#c2185b'}];
 
-function title(){
-  var has=false;try{has=!!localStorage.getItem(KEY)}catch(e){}
-  app.innerHTML='<h1>NAIJA<br>CASE FILE</h1><div class="tag">Every case has a truth. Find it.</div><button onclick="startNew()">START</button><button class="alt" '+(has?'':'disabled ')+'onclick="cont()">CONTINUE</button>';
+function avatar(d,w,crop){
+  var sk=SKIN[d.skin],o=OUTS[d.outfit],f=d.sex==='Female',sw=f?29:33,hr=HAIRS[d.hair];
+  var a=d.height.split('ft '),inch=+a[0]*12+ +a[1];
+  var s=crop?1:Math.min(1,Math.max(.86,.86+(inch-60)/17*.14));
+  var g='<svg xmlns="http://www.w3.org/2000/svg" viewBox="'+(crop?'22 20 76 76':'0 0 120 250')+'" width="'+w+'" height="'+(crop?w:w*250/120)+'">';
+  g+='<g transform="translate(60 238) scale('+s+') translate(-60 -238)">';
+  g+='<ellipse cx="60" cy="238" rx="30" ry="6" fill="rgba(0,0,0,.18)"/>';
+  g+='<rect x="44" y="138" width="14" height="92" rx="5" fill="'+o.pants+'"/><rect x="62" y="138" width="14" height="92" rx="5" fill="'+o.pants+'"/>';
+  g+='<rect x="41" y="226" width="19" height="10" rx="5" fill="#222"/><rect x="60" y="226" width="19" height="10" rx="5" fill="#222"/>';
+  g+='<rect x="'+(60-sw-11)+'" y="88" width="12" height="58" rx="6" fill="'+sk+'"/><rect x="'+(60+sw-1)+'" y="88" width="12" height="58" rx="6" fill="'+sk+'"/>';
+  g+='<rect x="54" y="68" width="12" height="18" fill="'+sk+'"/>';
+  g+='<rect x="'+(60-sw)+'" y="82" width="'+(sw*2)+'" height="62" rx="12" fill="'+o.top+'"/>';
+  var sl=(o.suit||o.native)?56:28;
+  g+='<rect x="'+(60-sw-11)+'" y="86" width="12" height="'+sl+'" rx="6" fill="'+o.top+'"/><rect x="'+(60+sw-1)+'" y="86" width="12" height="'+sl+'" rx="6" fill="'+o.top+'"/>';
+  g+='<circle cx="'+(60-sw-5)+'" cy="148" r="6.5" fill="'+sk+'"/><circle cx="'+(60+sw+5)+'" cy="148" r="6.5" fill="'+sk+'"/>';
+  if(o.native){g+='<path d="M60 82V144" stroke="#f4d03f" stroke-width="3"/><circle cx="48" cy="100" r="2.5" fill="#f4d03f"/><circle cx="72" cy="112" r="2.5" fill="#f4d03f"/><circle cx="49" cy="126" r="2.5" fill="#f4d03f"/><circle cx="71" cy="132" r="2.5" fill="#f4d03f"/>'}
+  else if(o.polo){g+='<path d="M50 82L60 95L70 82Z" fill="#fff"/>'}
+  else if(o.suit){g+='<path d="M52 82L60 114L68 82Z" fill="#fff"/><path d="M58 90H62L63 116L60 121L57 116Z" fill="#b03a2e"/><path d="M47 82L58 114L49 122Z" fill="#555"/><path d="M73 82L62 114L71 122Z" fill="#555"/>'}
+  else{g+='<path d="M52 82Q60 92 68 82Z" fill="'+sk+'"/>'}
+  if(hr==='Afro')g+='<circle cx="60" cy="40" r="28" fill="#111"/>';
+  g+='<circle cx="39" cy="52" r="4" fill="'+sk+'"/><circle cx="81" cy="52" r="4" fill="'+sk+'"/>';
+  if(f)g+='<circle cx="39" cy="58" r="2.2" fill="#f4d03f"/><circle cx="81" cy="58" r="2.2" fill="#f4d03f"/>';
+  g+='<circle cx="60" cy="50" r="21" fill="'+sk+'"/>';
+  var fr='<path d="M39 46Q39 27 60 27Q81 27 81 46Q74 36 60 36Q46 36 39 46Z" fill="#111"/>';
+  if(hr==='Low cut'||hr==='Afro')g+=fr;
+  if(hr==='Braids')g+=fr+'<rect x="36" y="42" width="6" height="44" rx="3" fill="#111"/><rect x="78" y="42" width="6" height="44" rx="3" fill="#111"/>';
+  if(hr==='Headwrap')g+='<path d="M38 46Q38 18 60 18Q82 18 82 46Q60 34 38 46Z" fill="#e67e22"/><ellipse cx="80" cy="20" rx="13" ry="8" fill="#e67e22" transform="rotate(-25 80 20)"/>';
+  g+='<circle cx="52" cy="50" r="2.6" fill="#222"/><circle cx="68" cy="50" r="2.6" fill="#222"/><path d="M53 60Q60 66 67 60" stroke="#5a2a1a" stroke-width="2" fill="none" stroke-linecap="round"/>';
+  return g+'</g></svg>';
 }
-function startNew(){S={detective:{},partner:null,partnerName:'',stage:'create'};create()}
+function portrait(p,w){
+  var sk=SKIN[p.skin],c=p.cloth,h=p.hair;
+  var s='<svg viewBox="0 0 100 100" width="'+w+'" height="'+w+'"><rect width="100" height="100" fill="'+c+'" opacity=".22"/>';
+  if(h==='afro'||h==='bun')s+='<circle cx="50" cy="38" r="26" fill="#111"/>';
+  if(h==='hijab')s+='<path d="M20 80Q14 18 50 16Q86 18 80 80Z" fill="'+c+'"/>';
+  s+='<path d="M10 100Q12 72 50 70Q88 72 90 100Z" fill="'+c+'"/><rect x="44" y="56" width="12" height="18" fill="'+sk+'"/><ellipse cx="50" cy="44" rx="19" ry="22" fill="'+sk+'"/>';
+  var fr='<path d="M31 42Q31 21 50 21Q69 21 69 42Q62 31 50 31Q38 31 31 42Z" fill="#111"/>';
+  if(h==='short'||h==='afro')s+=fr;
+  if(h==='braids')s+=fr+'<rect x="28" y="38" width="6" height="42" rx="3" fill="#111"/><rect x="66" y="38" width="6" height="42" rx="3" fill="#111"/>';
+  if(h==='bun')s+=fr+'<circle cx="50" cy="15" r="8" fill="#111"/>';
+  if(h==='hijab')s+='<path d="M30 44Q30 22 50 22Q70 22 70 44Q68 31 50 30Q32 31 30 44Z" fill="'+c+'"/><path d="M28 40Q24 72 38 78L33 56Z" fill="'+c+'"/><path d="M72 40Q76 72 62 78L67 56Z" fill="'+c+'"/>';
+  if(h==='headwrap')s+='<path d="M29 42Q29 14 50 14Q71 14 71 42Q50 30 29 42Z" fill="#e67e22"/><ellipse cx="68" cy="16" rx="13" ry="8" fill="#e67e22" transform="rotate(-25 68 16)"/>';
+  if(p.extra==='grey')s+='<circle cx="33" cy="42" r="4" fill="#bbb"/><circle cx="67" cy="42" r="4" fill="#bbb"/>';
+  s+='<circle cx="42" cy="46" r="2.4" fill="#222"/><circle cx="58" cy="46" r="2.4" fill="#222"/><path d="M43 56Q50 61 57 56" stroke="#5a2a1a" stroke-width="2" fill="none" stroke-linecap="round"/>';
+  var bd='<path d="M32 50Q34 72 50 72Q66 72 68 50Q60 62 50 62Q40 62 32 50Z" ';
+  if(p.extra==='beard')s+=bd+'fill="#111"/>';
+  if(p.extra==='gbeard')s+=bd+'fill="#999"/>';
+  if(p.extra==='stubble')s+=bd+'fill="#111" opacity=".25"/>';
+  if(p.extra==='glasses')s+='<circle cx="42" cy="46" r="6.5" fill="none" stroke="#222" stroke-width="1.8"/><circle cx="58" cy="46" r="6.5" fill="none" stroke="#222" stroke-width="1.8"/><path d="M48.5 46H51.5" stroke="#222" stroke-width="1.8"/>';
+  return '<div class="pt" style="width:'+w+'px;height:'+w+'px">'+s+'</svg></div>';
+}
+var LOGO='<svg viewBox="0 0 100 100" width="84" height="84"><defs><clipPath id="lc"><circle cx="44" cy="44" r="17"/></clipPath></defs><circle cx="50" cy="50" r="48" fill="#141b38" stroke="#f5b335" stroke-width="3"/><circle cx="44" cy="44" r="20" fill="#fff"/><g clip-path="url(#lc)"><rect x="27" y="24" width="11.4" height="40" fill="#0a8f4a"/><rect x="38.4" y="24" width="11.4" height="40" fill="#fff"/><rect x="49.8" y="24" width="11.4" height="40" fill="#0a8f4a"/></g><circle cx="44" cy="44" r="19" fill="none" stroke="#f5b335" stroke-width="5"/><path d="M58 58L80 80" stroke="#f5b335" stroke-width="9" stroke-linecap="round"/></svg>';
+var HS=[90,130,70,160,110,80,140,100,120,75,150,95];
+var SKY=(function(){var s='<svg class="sky" viewBox="0 0 360 200" preserveAspectRatio="xMidYMax slice">';
+  for(var b=0;b<12;b++){var h=HS[b],x=b*30;s+='<rect x="'+x+'" y="'+(200-h)+'" width="30" height="'+h+'" fill="'+(b%2?'#1a2347':'#141b38')+'"/>';
+    for(var r=0;r<Math.floor((h-20)/16);r++){for(var c=0;c<3;c++){if((b*7+r*3+c*5)%4)s+='<rect x="'+(x+5+c*8)+'" y="'+(200-h+8+r*16)+'" width="5" height="7" fill="#ffd166" opacity=".85"/>'}}}
+  s+='<rect y="194" width="360" height="6" fill="#0b0f20"/><g class="dan"><rect x="0" y="178" width="46" height="16" rx="3" fill="#f5b335"/><rect x="0" y="185" width="46" height="3" fill="#111"/><rect x="6" y="181" width="8" height="5" fill="#cfe9ff"/><rect x="18" y="181" width="8" height="5" fill="#cfe9ff"/><rect x="30" y="181" width="8" height="5" fill="#cfe9ff"/><circle cx="10" cy="195" r="4" fill="#111"/><circle cx="36" cy="195" r="4" fill="#111"/></g></svg>';return s})();
+
+function splash(){
+  app.innerHTML='<div class="screen splash">'+LOGO+'<h2>NAIJA CASE FILE</h2><div class="bar"><i></i></div></div>';
+  setTimeout(title,1900);
+}
+function title(){
+  S.stage='title';
+  var has=false;try{has=!!localStorage.getItem(KEY)}catch(e){}
+  var st='';for(var k=0;k<34;k++)st+='<span class="st" style="left:'+((k*37)%100)+'%;top:'+((k*23)%48)+'%;animation-delay:'+((k%7)*.3)+'s"></span>';
+  app.innerHTML='<div class="screen title">'+st+'<div class="moon"></div><div class="tw">'+LOGO+'<h1>NAIJA<br>CASE FILE</h1><p>Every case has a truth. Find it.</p></div><div class="btns"><button class="btn" onclick="startNew()">START</button><button class="btn alt" '+(has?'':'disabled ')+'onclick="cont()">CONTINUE</button></div>'+SKY+'</div>';
+  top0();
+}
+function startNew(){S={det:null,partner:null,partnerName:'',stage:'create'};D=null;create()}
 function cont(){
-  try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){return title()}
-  var st=S.stage;
-  if(st==='pick')pick();else if(st==='brief')brief();else if(st==='scene')scene();else create();
+  try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){return startNew()}
+  var g=S.stage;
+  if(!S.det)return startNew();
+  if(g==='pick')pick();else if(g==='cases')cases();else if(g==='brief')brief();else if(g==='scene'){LN=0;scene()}else create();
 }
 function create(){
   S.stage='create';save();
-  app.innerHTML='<h2>Create your detective</h2><label>Name</label><input id="dn" maxlength="24" placeholder="Detective name"><label>Sex</label><select id="sx">'+opts(['Male','Female'])+'</select><label>Age</label><input id="ag" type="number" value="28"><label>Height</label><select id="ht">'+opts(HT)+'</select><label>Skin tone</label><select id="sk">'+opts(['Light','Light brown','Medium brown','Dark brown','Deep dark'])+'</select><label>Starting outfit</label><select id="of">'+opts(['Plain shirt and trousers','Native top and trousers','Polo and jeans','Old suit'])+'</select><button onclick="next1()">NEXT</button>';
-  $('ht').value='5ft 8';
+  if(!D)D=S.det?JSON.parse(JSON.stringify(S.det)):{name:'',sex:'Male',age:28,height:'5ft 8',skin:2,outfit:0,hair:0};
+  drawCreate();top0();
+}
+function sync(){var n=$('dn');if(n){D.name=n.value;D.age=$('ag').value;D.height=$('ht').value}}
+function setD(k,v){sync();D[k]=v;drawCreate()}
+function chips(key,arr,sel){return arr.map(function(x,i){return '<button class="chip'+(i===sel?' on':'')+'" onclick="setD(\''+key+'\','+i+')">'+x+'</button>'}).join('')}
+function drawCreate(){
+  var sx=['Male','Female'].map(function(x){return '<button class="chip'+(D.sex===x?' on':'')+'" onclick="setD(\'sex\',\''+x+'\')">'+x+'</button>'}).join('');
+  var sw=SKIN.map(function(c,i){return '<button class="sw'+(D.skin===i?' on':'')+'" style="background:'+c+'" onclick="setD(\'skin\','+i+')"></button>'}).join('');
+  var ho=HT.map(function(h){return '<option'+(h===D.height?' selected':'')+'>'+h+'</option>'}).join('');
+  app.innerHTML='<div class="screen"><div class="top">Create your detective</div><div class="stage"><div class="bob">'+avatar(D,118)+'</div></div><div class="panel"><label class="l">Name</label><input id="dn" class="in" maxlength="24" placeholder="Detective name" value="'+esc(D.name)+'"><label class="l">Sex</label>'+sx+'<label class="l">Age (21 to 60)</label><input id="ag" class="in" type="number" value="'+esc(D.age)+'"><label class="l">Height</label><select id="ht" class="in" onchange="sync();drawCreate()">'+ho+'</select><label class="l">Skin tone</label>'+sw+'<label class="l">Hair</label>'+chips('hair',HAIRS,D.hair)+'<label class="l">Starting outfit</label>'+chips('outfit',OUTS.map(function(o){return o.n}),D.outfit)+'<button class="btn" style="margin-top:20px" onclick="next1()">NEXT</button></div></div>';
 }
 function next1(){
-  var n=$('dn').value.trim();
+  sync();var n=D.name.trim();
   if(!n){alert('Enter your detective name');return}
-  var a=+$('ag').value;
-  if(!(a>=21&&a<=60)){alert('Age must be between 21 and 60');return}
-  S.detective={name:n,sex:$('sx').value,age:a,height:$('ht').value,skin:$('sk').value,outfit:$('of').value};
+  var a=+D.age;if(!(a>=21&&a<=60)){alert('Age must be between 21 and 60');return}
+  S.det={name:n,sex:D.sex,age:a,height:D.height,skin:D.skin,outfit:D.outfit,hair:D.hair};
   pick();
 }
-function pick(){
-  S.stage='pick';save();
-  var h='<h2>Choose your partner</h2>';
-  PARTNERS.forEach(function(p,i){
-    h+='<div class="card'+(S.partner===i?' sel':'')+'" onclick="choose('+i+')"><div class="av" style="background:'+p[6]+'">'+p[0][0]+'</div><div><b>'+p[0]+'</b><div class="small">'+p[1]+', '+p[2]+', '+p[3]+'<br>'+p[4]+'<br>'+p[5]+'</div></div></div>';
-  });
-  h+='<button '+(S.partner===null?'disabled ':'')+'onclick="nameP()">NEXT</button>';
-  app.innerHTML=h;
+function pick(){S.stage='pick';save();drawPick();top0()}
+function drawPick(){
+  var c=PARTNERS.map(function(p,i){return '<div class="pc'+(S.partner===i?' on':'')+'" onclick="choose('+i+')">'+portrait(p,84)+'<b>'+p.name+'</b><div class="s">'+p.sex+', '+p.age+', '+p.height+'</div><div class="s">'+p.look+'</div><div class="s i">'+p.pers+'</div></div>'}).join('');
+  app.innerHTML='<div class="screen"><div class="top">Choose your partner</div><div class="grid">'+c+'</div><div class="foot"><button class="btn" '+(S.partner===null?'disabled ':'')+'onclick="nameP()">NEXT</button></div></div>';
 }
-function choose(i){var y=window.scrollY;S.partner=i;pick();window.scrollTo(0,y)}
+function choose(i){S.partner=i;save();drawPick()}
 function nameP(){
   var p=PARTNERS[S.partner];
-  app.innerHTML='<h2>Name your partner</h2><div class="card"><div class="av" style="background:'+p[6]+'">'+p[0][0]+'</div><div><b>'+p[0]+'</b><div class="small">'+p[5]+'</div></div></div><label>What do you call your partner?</label><input id="pn" maxlength="20" value="'+esc(S.partnerName||p[0])+'"><button onclick="donePN()">CONFIRM</button>';
+  app.innerHTML='<div class="screen"><div class="top">Name your partner</div><div style="padding:20px;text-align:center">'+portrait(p,150)+'<h3 style="margin:10px 0 2px">'+p.name+'</h3><div class="hint">'+p.pers+'</div><label class="l" style="text-align:left">What do you call your partner?</label><input id="pn" class="in" maxlength="20" value="'+esc(S.partnerName||p.name)+'"><button class="btn" style="margin-top:20px" onclick="donePN()">CONFIRM</button></div></div>';
+  top0();
 }
-function donePN(){
-  S.partnerName=$('pn').value.trim()||PARTNERS[S.partner][0];
-  brief();
+function donePN(){S.partnerName=$('pn').value.trim()||PARTNERS[S.partner].name;cases()}
+function cases(){
+  S.stage='cases';save();
+  var p=PARTNERS[S.partner];
+  var h='<div class="screen"><div class="hdr"><div class="hav">'+avatar(S.det,58,1)+'</div><div><b>'+esc(S.det.name)+'</b><br><small>Cadet Detective · Reputation 0</small></div><div style="margin-left:auto;text-align:center">'+portrait(p,44)+'<small>'+esc(S.partnerName)+'</small></div></div><div class="top">Case Files</div>';
+  h+='<div class="case"><div class="num">001</div><div><b>THE LANDLORD</b><br><small>Surulere, Lagos · Murder · 4 days</small></div><button class="go" onclick="brief()">PLAY</button></div>';
+  for(var n=2;n<=8;n++){var id=('00'+n).slice(-3),pv=('00'+(n-1)).slice(-3);h+='<div class="case lock"><div class="num">&#128274;</div><div><b>Case '+id+'</b><br><small>Locked. Solve Case '+pv+' first.</small></div></div>'}
+  h+='<p style="text-align:center;color:#9a8660;padding:10px 20px 30px">More cases coming soon.</p></div>';
+  app.innerHTML=h;top0();
 }
 function brief(){
   S.stage='brief';save();
-  function r(a,b){return '<div class="row"><span class="small">'+a+'</span><b>'+b+'</b></div>'}
-  app.innerHTML='<div class="small">CASE 001</div><h2>THE LANDLORD</h2>'+r('Location','SURULERE, LAGOS')+r('Time','2:20 AM')+r('Crime','MURDER')+r('Deadline','4 DAYS')+r('Suspects','5')+r('Detective',esc(S.detective.name))+r('Partner',esc(S.partnerName))+'<button style="margin-top:24px" onclick="scene()">BEGIN INVESTIGATION</button>';
+  function r(a,b){return '<div class="row"><span>'+a+'</span><b>'+b+'</b></div>'}
+  app.innerHTML='<div class="screen"><div class="top">CASE 001</div><div style="padding:0 18px;font-size:30px;font-weight:900;color:#b36b00">THE LANDLORD</div><div class="card">'+r('Location','SURULERE, LAGOS')+r('Time','2:20 AM')+r('Crime','MURDER')+r('Deadline','4 DAYS')+r('Suspects','5')+r('Detective',esc(S.det.name))+r('Partner',esc(S.partnerName))+'</div><div style="padding:0 16px"><button class="btn" onclick="LN=0;scene()">BEGIN INVESTIGATION</button><button class="btn alt" onclick="cases()">BACK TO CASES</button></div></div>';
+  top0();
 }
 function scene(){
   S.stage='scene';save();
-  app.innerHTML='<div class="hud">SURULERE, LAGOS · 2:20 AM · Day 1 of 4</div><h2>Crime Scene</h2><p>'+esc(S.partnerName)+': "Boss, we are here. Let us see what happened."</p><p class="small">Crime scene investigation coming in the next module.</p><button class="alt" onclick="title()">BACK TO TITLE</button>';
+  var p=PARTNERS[S.partner];
+  var L=[[S.partnerName,'Boss, we have a body in Surulere. Neighbours are already gathering outside.',1],[S.det.name,'Keep them back. Nobody touches anything until we have looked.',0],[S.partnerName,'On it. I will meet you inside.',1],['','(The crime scene investigation arrives in the next upgrade.)',2]];
+  var l=L[LN],last=LN===L.length-1;
+  var face=l[2]===1?portrait(p,64):(l[2]===0?'<div class="hav">'+avatar(S.det,64,1)+'</div>':'');
+  app.innerHTML='<div class="screen night"><div class="pill">&#128205; SURULERE, LAGOS &nbsp;&middot;&nbsp; 2:20 AM &nbsp;&middot;&nbsp; Day 1 of 4</div><div class="sv"><div class="bob">'+avatar(S.det,100)+'</div><div>'+portrait(p,90)+'</div></div><div class="dlg" onclick="'+(last?'':'LN++;scene()')+'">'+face+'<div style="flex:1"><b>'+esc(l[0])+'</b>'+esc(l[1])+(last?'':'<div class="hint">Tap to continue</div>')+'</div></div>'+(last?'<div style="padding:0 14px 24px"><button class="btn" onclick="cases()">BACK TO CASE LIST</button></div>':'')+'</div>';
+  top0();
 }
-title();
+splash();
 </script></body></html>
