@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NAIJA CASE FILE</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0f0c;color:#e8e6df;font-family:system-ui,sans-serif}
+#app{max-width:480px;margin:0 auto;min-height:100vh;padding:20px}
+h1{letter-spacing:4px;color:#2ecc71;text-align:center;margin:40px 0 8px}
+h2{color:#2ecc71}
+.tag{text-align:center;font-style:italic;color:#9aa;margin-bottom:40px}
+button{display:block;width:100%;padding:16px;margin:10px 0;background:#2ecc71;color:#06120a;border:0;border-radius:10px;font-size:17px;font-weight:700}
+button.alt{background:#1c2a21;color:#2ecc71;border:1px solid #2ecc71}
+button:disabled{opacity:.35}
+label{display:block;margin:14px 0 4px;color:#9aa;font-size:14px}
+input,select{width:100%;padding:13px;border-radius:8px;border:1px solid #2a3a30;background:#121a15;color:#fff;font-size:16px}
+.card{background:#121a15;border:1px solid #2a3a30;border-radius:12px;padding:14px;margin:10px 0;display:flex;gap:12px;align-items:center}
+.card.sel{border-color:#2ecc71;background:#16261c}
+.av{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#fff;flex:none}
+.small{font-size:13px;color:#9aa}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1f2d25}
+.hud{font-size:13px;color:#9aa;text-align:center;border-bottom:1px solid #1f2d25;padding-bottom:8px;margin-bottom:12px}
+</style></head><body><div id="app"></div>
+<script>
+var KEY='naijaCaseFile1';
+var S={detective:{},partner:null,partnerName:'',stage:'create'};
+var app=document.getElementById('app');
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return '&#'+c.charCodeAt(0)+';'})}
+function opts(a){return a.map(function(x){return '<option>'+x+'</option>'}).join('')}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+var HT=[];for(var i=0;i<=11;i++)HT.push('5ft '+i);for(i=0;i<=5;i++)HT.push('6ft '+i);
+var PARTNERS=[
+['Emeka','Male',38,'5ft 11','Heavyset, grey at the temples','Patient, reads people well','#2980b9'],
+['Aisha','Female',31,'5ft 6','Sharp eyes, neat hijab','Methodical, great with evidence','#8e44ad'],
+['Tunde','Male',27,'6ft 1','Tall, lean, restless','Quick-witted, a bit reckless','#c0392b'],
+['Ngozi','Female',44,'5ft 4','Short natural hair, reading glasses','Calm, strong on the law','#16a085'],
+['Musa','Male',35,'5ft 9','Beard, quiet, watchful','Observant, speaks little','#d35400'],
+['Funke','Female',29,'5ft 8','Braids, athletic','Bold, great in the field','#27ae60'],
+['Ifeanyi','Male',50,'5ft 7','Bald, stern, veteran','Blunt, has seen it all','#7f8c8d'],
+['Hauwa','Female',33,'5ft 5','Soft-spoken, always taking notes','Gentle, gets people to open up','#2c3e50'],
+['Efe','Male',30,'5ft 10','Stylish, easy smile','Charming, sometimes wrong','#e67e22'],
+['Bisi','Female',40,'5ft 3','Round face, warm voice','Motherly, spots liars fast','#c2185b']];
+
+function title(){
+  var has=false;try{has=!!localStorage.getItem(KEY)}catch(e){}
+  app.innerHTML='<h1>NAIJA<br>CASE FILE</h1><div class="tag">Every case has a truth. Find it.</div><button onclick="startNew()">START</button><button class="alt" '+(has?'':'disabled ')+'onclick="cont()">CONTINUE</button>';
+}
+function startNew(){S={detective:{},partner:null,partnerName:'',stage:'create'};create()}
+function cont(){
+  try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){return title()}
+  var st=S.stage;
+  if(st==='pick')pick();else if(st==='brief')brief();else if(st==='scene')scene();else create();
+}
+function create(){
+  S.stage='create';save();
+  app.innerHTML='<h2>Create your detective</h2><label>Name</label><input id="dn" maxlength="24" placeholder="Detective name"><label>Sex</label><select id="sx">'+opts(['Male','Female'])+'</select><label>Age</label><input id="ag" type="number" value="28"><label>Height</label><select id="ht">'+opts(HT)+'</select><label>Skin tone</label><select id="sk">'+opts(['Light','Light brown','Medium brown','Dark brown','Deep dark'])+'</select><label>Starting outfit</label><select id="of">'+opts(['Plain shirt and trousers','Native top and trousers','Polo and jeans','Old suit'])+'</select><button onclick="next1()">NEXT</button>';
+  $('ht').value='5ft 8';
+}
+function next1(){
+  var n=$('dn').value.trim();
+  if(!n){alert('Enter your detective name');return}
+  var a=+$('ag').value;
+  if(!(a>=21&&a<=60)){alert('Age must be between 21 and 60');return}
+  S.detective={name:n,sex:$('sx').value,age:a,height:$('ht').value,skin:$('sk').value,outfit:$('of').value};
+  pick();
+}
+function pick(){
+  S.stage='pick';save();
+  var h='<h2>Choose your partner</h2>';
+  PARTNERS.forEach(function(p,i){
+    h+='<div class="card'+(S.partner===i?' sel':'')+'" onclick="choose('+i+')"><div class="av" style="background:'+p[6]+'">'+p[0][0]+'</div><div><b>'+p[0]+'</b><div class="small">'+p[1]+', '+p[2]+', '+p[3]+'<br>'+p[4]+'<br>'+p[5]+'</div></div></div>';
+  });
+  h+='<button '+(S.partner===null?'disabled ':'')+'onclick="nameP()">NEXT</button>';
+  app.innerHTML=h;
+}
+function choose(i){var y=window.scrollY;S.partner=i;pick();window.scrollTo(0,y)}
+function nameP(){
+  var p=PARTNERS[S.partner];
+  app.innerHTML='<h2>Name your partner</h2><div class="card"><div class="av" style="background:'+p[6]+'">'+p[0][0]+'</div><div><b>'+p[0]+'</b><div class="small">'+p[5]+'</div></div></div><label>What do you call your partner?</label><input id="pn" maxlength="20" value="'+esc(S.partnerName||p[0])+'"><button onclick="donePN()">CONFIRM</button>';
+}
+function donePN(){
+  S.partnerName=$('pn').value.trim()||PARTNERS[S.partner][0];
+  brief();
+}
+function brief(){
+  S.stage='brief';save();
+  function r(a,b){return '<div class="row"><span class="small">'+a+'</span><b>'+b+'</b></div>'}
+  app.innerHTML='<div class="small">CASE 001</div><h2>THE LANDLORD</h2>'+r('Location','SURULERE, LAGOS')+r('Time','2:20 AM')+r('Crime','MURDER')+r('Deadline','4 DAYS')+r('Suspects','5')+r('Detective',esc(S.detective.name))+r('Partner',esc(S.partnerName))+'<button style="margin-top:24px" onclick="scene()">BEGIN INVESTIGATION</button>';
+}
+function scene(){
+  S.stage='scene';save();
+  app.innerHTML='<div class="hud">SURULERE, LAGOS · 2:20 AM · Day 1 of 4</div><h2>Crime Scene</h2><p>'+esc(S.partnerName)+': "Boss, we are here. Let us see what happened."</p><p class="small">Crime scene investigation coming in the next module.</p><button class="alt" onclick="title()">BACK TO TITLE</button>';
+}
+title();
+</script></body></html>
